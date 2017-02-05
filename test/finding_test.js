@@ -26,7 +26,6 @@ describe('Finding records', () => {
     })
 
     it('Find one record by ID from the database', (done) => {
-        console.log(char._id.toString());
         MarioChar.findOne({
                 _id: char._id
             })
