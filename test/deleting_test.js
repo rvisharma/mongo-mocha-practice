@@ -1,4 +1,5 @@
 require('mocha');
+const mongoose = require('mongoose');
 const assert = require('assert');
 const MarioChar = require('../models/marioChar');
 const {
@@ -8,6 +9,9 @@ const {
 describe('Deleting Records', () => {
   let char;
 
+  // drop the char collection before each test
+  const dropMarioCollection = done => mongoose.connection.collections['mariochars'].drop(done);
+  beforeEach(dropMarioCollection);
   beforeEach((done) => {
     char = new MarioChar({
       name: 'Mario'
