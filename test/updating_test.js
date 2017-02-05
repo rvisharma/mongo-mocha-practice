@@ -4,19 +4,31 @@ const MarioChar = require('../models/marioChar');
 const { callDone } = require('./util');
 
 describe('Updating Records', () => {
-    let char;
+  let char;
 
-    beforeEach((done) => {
-        char = new MarioChar({ name: 'Mario' });
-        char.save().then(callDone(done));
-    })
+  beforeEach((done) => {
+    char = new MarioChar({
+      name: 'Mario',
+      weight: 50
+    });
+    char.save().then(callDone(done));
+  })
 
-    it('Update one record in the database', () => {
-        MarioChar.findOneAndUpdate({ name: 'Mario' }, { name: 'Luigi' })
-            .then(() => {
-                MarioChar.findOne({ _id: char._id }).then((result) => {
-                    assert(result.name === 'Luigi');
-                })
-            })
-    })
+  it('Update one record in the database', (done) => {
+    MarioChar.findOneAndUpdate({ name: 'Mario' }, { name: 'Luigi' })
+      .then(() => {
+        MarioChar.findOne({ _id: char._id })
+          .then(result => assert(result.name === 'Luigi'))
+          .then(callDone(done))
+      })
+  })
+
+  it('Increment the weight by 1', (done) => {
+    MarioChar.update({ name: 'Mario' }, { $inc: { weight: 1 } })
+      .then(() => {
+        MarioChar.findOne({ name: 'Mario' })
+          .then(result => assert(result.weight === 51))
+          .then(callDone(done));
+      })
+  })
 })
