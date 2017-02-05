@@ -2,9 +2,12 @@ require('mocha');
 const assert = require('assert');
 const MarioChar = require('../models/marioChar');
 
+const {
+    callDone
+} = require('./util');
+
 describe('Finding records', () => {
     var char;
-    const callDone = (done) => () => done();
 
     beforeEach((done) => {
 
