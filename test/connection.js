@@ -20,5 +20,7 @@ beforeEach((done) => {
 
 after((done) => {
     console.log('All test completed');
-    mongoose.connection.close(done);
+    mongoose.connection
+        .close()
+        .then(() => done());
 })
